@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { sql } from "@/lib/db";
 import { ROUNDS, TIEBREAK_QUESTIONS } from "@/content/rounds";
 import { SHOP_AFTER_ROUNDS, MAX_QUESTION_POINTS } from "@/types/game";
+import { autoPlayBotsForQuestion, autoPlayBotsFinalVote } from "@/lib/answering";
 
 type Action =
   | "start_questions"
@@ -21,6 +22,17 @@ export async function POST(req: Request) {
   if (rooms.length === 0) return NextResponse.json({ error: "Sala no encontrada" }, { status: 404 });
   const room = rooms[0];
 
+  function questionRoom(currentRound: number, currentQuestion: number) {
+    return {
+      id: roomId,
+      phase: "question",
+      current_round: currentRound,
+      current_question: currentQuestion,
+      question_started_at: new Date().toISOString(),
+      tiebreak_player_ids: room.tiebreak_player_ids,
+    };
+  }
+
   switch (action) {
     case "start_questions": {
       await sql`
@@ -28,6 +40,7 @@ export async function POST(req: Request) {
           question_started_at = now()
         where id = ${roomId}
       `;
+      await autoPlayBotsForQuestion(sql, questionRoom(0, 0));
       break;
     }
     case "reveal": {
@@ -76,8 +89,10 @@ export async function POST(req: Request) {
             update rooms set phase = 'question', current_question = ${nextQ}, question_started_at = now()
             where id = ${roomId}
           `;
+          await autoPlayBotsForQuestion(sql, questionRoom(-1, nextQ));
         } else {
           await sql`update rooms set phase = 'final_vote' where id = ${roomId}`;
+          await autoPlayBotsFinalVote(sql, roomId);
         }
         break;
       }
@@ -89,6 +104,7 @@ export async function POST(req: Request) {
           update rooms set phase = 'question', current_question = ${nextQ}, question_started_at = now()
           where id = ${roomId}
         `;
+        await autoPlayBotsForQuestion(sql, questionRoom(room.current_round, nextQ));
       } else if (SHOP_AFTER_ROUNDS.has(room.current_round)) {
         await sql`update rooms set phase = 'shop' where id = ${roomId}`;
       } else if (room.current_round + 1 < ROUNDS.length) {
@@ -97,6 +113,7 @@ export async function POST(req: Request) {
             current_question = 0, question_started_at = now()
           where id = ${roomId}
         `;
+        await autoPlayBotsForQuestion(sql, questionRoom(room.current_round + 1, 0));
       } else {
         // último round terminado: el host decide manualmente si hay desempate
         await sql`update rooms set phase = 'reveal' where id = ${roomId}`;
@@ -109,6 +126,7 @@ export async function POST(req: Request) {
           current_question = 0, question_started_at = now()
         where id = ${roomId}
       `;
+      await autoPlayBotsForQuestion(sql, questionRoom(room.current_round + 1, 0));
       break;
     }
     case "start_tiebreak": {
@@ -118,10 +136,12 @@ export async function POST(req: Request) {
           question_started_at = now(), tiebreak_player_ids = ${sql.array(ids)}::uuid[]
         where id = ${roomId}
       `;
+      await autoPlayBotsForQuestion(sql, { ...questionRoom(-1, 0), tiebreak_player_ids: ids });
       break;
     }
     case "start_final_vote": {
       await sql`update rooms set phase = 'final_vote' where id = ${roomId}`;
+      await autoPlayBotsFinalVote(sql, roomId);
       break;
     }
     case "finish": {

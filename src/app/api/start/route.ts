@@ -7,14 +7,15 @@ export async function POST(req: Request) {
   if (!roomId) return NextResponse.json({ error: "Falta roomId" }, { status: 400 });
 
   const players = await sql`select * from players where room_id = ${roomId} order by joined_at asc`;
-  if (players.length < 3) {
-    return NextResponse.json(
-      { error: "Hacen falta al menos 3 jugadores para arrancar" },
-      { status: 400 }
-    );
+  if (players.length < 1) {
+    return NextResponse.json({ error: "Hace falta al menos 1 jugador para arrancar" }, { status: 400 });
   }
 
-  const infiltrado = players[Math.floor(Math.random() * players.length)];
+  // El infiltrado siempre recae en una persona real cuando hay alguna
+  // (un bot de testeo no puede cumplir misiones, así que no tiene sentido elegirlo).
+  const humanPlayers = players.filter((p) => !p.is_bot);
+  const pool = humanPlayers.length > 0 ? humanPlayers : players;
+  const infiltrado = pool[Math.floor(Math.random() * pool.length)];
   const others = players.filter((p) => p.id !== infiltrado.id);
 
   await sql.begin(async (tx) => {

@@ -131,7 +131,19 @@ function Centered({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Lobby({ room, players }: { room: { id: string }; players: { id: string; name: string }[] }) {
+function Lobby({ room, players }: { room: { id: string }; players: { id: string; name: string; is_bot: boolean }[] }) {
+  const [addingBots, setAddingBots] = useState(false);
+
+  async function addBots() {
+    setAddingBots(true);
+    await fetch("/api/bots", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ roomId: room.id, count: 2 }),
+    });
+    setAddingBots(false);
+  }
+
   return (
     <div className="text-center space-y-8 max-w-lg">
       <div>
@@ -145,19 +157,31 @@ function Lobby({ room, players }: { room: { id: string }; players: { id: string;
         <ul className="flex flex-wrap gap-2 justify-center">
           {players.map((p) => (
             <li key={p.id} className="rounded-full bg-neutral-800 px-4 py-1.5 font-medium">
+              {p.is_bot ? "🤖 " : ""}
               {p.name}
             </li>
           ))}
           {players.length === 0 && <li className="text-neutral-500">nadie todavía…</li>}
         </ul>
       </div>
-      <button
-        disabled={players.length < 3}
-        onClick={() => fetch("/api/start", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ roomId: room.id }) })}
-        className="rounded-md bg-red-500 disabled:opacity-40 text-neutral-950 font-bold uppercase tracking-wide px-8 py-4 hover:bg-red-400"
-      >
-        Sortear infiltrado y arrancar
-      </button>
+      <div className="space-y-3">
+        <button
+          disabled={players.length < 1}
+          onClick={() => fetch("/api/start", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ roomId: room.id }) })}
+          className="rounded-md bg-red-500 disabled:opacity-40 text-neutral-950 font-bold uppercase tracking-wide px-8 py-4 hover:bg-red-400"
+        >
+          Sortear infiltrado y arrancar
+        </button>
+        <div>
+          <button
+            onClick={addBots}
+            disabled={addingBots}
+            className="rounded-md border border-neutral-700 text-neutral-300 text-sm px-4 py-2 hover:border-amber-400 disabled:opacity-40"
+          >
+            🤖 Sumar 2 bots (para testear solo)
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

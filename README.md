@@ -21,6 +21,15 @@ para reglas, rounds, tienda y mecánica del Infiltrado.
   cliente escribe directo a la base), y el contenido con respuestas correctas
   nunca se manda al navegador hasta el momento del reveal.
 
+## Jugar solo (testeo)
+
+Desde el lobby del host hay un botón **"🤖 Sumar 2 bots"**. Los bots se suman
+como jugadores normales, responden solos apenas arranca cada pregunta (al
+azar) y votan solos en la acusación final — así podés probar todo el flujo
+(rounds, tienda, Infiltrado, votación final) entrando como el único jugador
+real desde tu celular o desde otra pestaña. El sorteo del Infiltrado siempre
+recae en una persona real cuando hay alguna, nunca en un bot.
+
 ## Desarrollo local
 
 ```bash

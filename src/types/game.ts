@@ -29,6 +29,7 @@ export interface Player {
   score: number;
   infiltrado_points: number;
   is_infiltrado: boolean;
+  is_bot: boolean;
   joined_at: string;
 }
 

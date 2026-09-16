@@ -25,9 +25,12 @@ create table if not exists players (
   score int not null default 0,
   infiltrado_points int not null default 0,
   is_infiltrado boolean not null default false,
+  is_bot boolean not null default false,
   joined_at timestamptz not null default now(),
   unique (room_id, name)
 );
+
+alter table players add column if not exists is_bot boolean not null default false;
 
 do $$
 begin
