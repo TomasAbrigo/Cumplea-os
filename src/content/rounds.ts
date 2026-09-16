@@ -94,35 +94,36 @@ const round1: Round = {
   ],
 };
 
-// TODO(Tomi): reemplazar imageUrl por las fotos reales elegidas del zip de WhatsApp
-// (ponerlas en /public/round2/ y actualizar las rutas + la respuesta correcta).
+// Las 3 fotos son capturas reales de Spotify Wrapped que cada uno compartió
+// en el chat el 3/12/25 (mismo hilo, uno atrás del otro). Autoría confirmada
+// por el propio mensaje de cada uno ("si te muestro el mio", "yo soy re hombre").
 const round2: Round = {
   index: 1,
   key: "archivo-historico",
   type: "photo",
   title: "Archivo histórico",
-  subtitle: "Foto real del chat, recortada o con zoom. ¿Quién, dónde o qué es?",
+  subtitle: "Wrapped real del chat (dic. 2025). ¿De quién es?",
   questions: [
     {
       id: "r2q1",
-      prompt: "PENDIENTE: elegir foto real #1 del zip",
-      imageUrl: "/round2/placeholder-1.svg",
+      prompt: "Top 1: Yami Safdie. 23.896 minutos escuchados. Género principal: Rock latino.",
+      imageUrl: "/round2/wrapped-franco.jpg",
       options: CHAT_PEOPLE,
-      correctIndex: 0,
+      correctIndex: CHAT_PEOPLE.indexOf("Franco"),
     },
     {
       id: "r2q2",
-      prompt: "PENDIENTE: elegir foto real #2 del zip",
-      imageUrl: "/round2/placeholder-2.svg",
+      prompt: "76.272 minutos escuchados en el año. Eso equivale a 52 días enteros de música.",
+      imageUrl: "/round2/wrapped-juampi.jpg",
       options: CHAT_PEOPLE,
-      correctIndex: 0,
+      correctIndex: CHAT_PEOPLE.indexOf("Juampi"),
     },
     {
       id: "r2q3",
-      prompt: "PENDIENTE: elegir foto real #3 del zip",
-      imageUrl: "/round2/placeholder-3.svg",
+      prompt: "Top 1: Las Pastillas del Abuelo. 28.942 minutos escuchados. Género principal: Rock latino.",
+      imageUrl: "/round2/wrapped-mati.jpg",
       options: CHAT_PEOPLE,
-      correctIndex: 0,
+      correctIndex: CHAT_PEOPLE.indexOf("Mati"),
     },
   ],
 };

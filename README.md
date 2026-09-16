@@ -42,9 +42,10 @@ node scripts/migrate.mjs
 
 ## Pendientes antes del evento
 
-1. **Archivo histórico** (`src/content/rounds.ts`, round `archivo-historico`):
-   reemplazar las 3 fotos placeholder de `/public/round2/` por fotos reales
-   elegidas del zip de WhatsApp, y ajustar la respuesta correcta de cada una.
+1. **Archivo histórico**: ya cargado con 3 Spotify Wrapped reales que Franco,
+   Juampi y Mati compartieron en el chat (3/12/25) — autoría confirmada por
+   el propio mensaje de cada uno. Si Tomi prefiere otras fotos, reemplazar en
+   `/public/round2/` y ajustar `src/content/rounds.ts`.
 2. **Contexto perdido**: los 4 mensajes ya están cargados con su evento
    correcto (Copa Galaxy / Cosquín Rock / ESTA / Moncholo FC) — no requiere
    más trabajo salvo que Tomi quiera sumar más anécdotas.
