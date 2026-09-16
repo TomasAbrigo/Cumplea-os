@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# La Noche de los 9
 
-## Getting Started
+Game show casero para el cumpleaños de Tomi. Nueve jugadores, un solo puntaje
+real por persona (sin equipos), y El Infiltrado corriendo en paralelo toda la
+noche.
 
-First, run the development server:
+Ver el [documento de diseño completo](https://claude.ai/code/artifact/0a0e3840-d012-4b3a-b41d-ab7f9b4a6a4d)
+para reglas, rounds, tienda y mecánica del Infiltrado.
+
+## Cómo se juega
+
+- Una notebook conectada a la TV corre `/host/[código]` — la pantalla principal.
+- Cada jugador entra desde su celular a `/play/[código]`.
+- El host controla todo: arranca la partida, muestra respuestas y avanza rounds.
+
+## Stack
+
+- Next.js (App Router) + Tailwind
+- Postgres + Realtime de Supabase (vía Vercel Marketplace)
+- Todas las mutaciones de juego pasan por rutas de API server-side (nunca el
+  cliente escribe directo a la base), y el contenido con respuestas correctas
+  nunca se manda al navegador hasta el momento del reveal.
+
+## Desarrollo local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Las variables de entorno (Supabase/Postgres) ya están provistas por la
+integración de Vercel — corré `vercel env pull` si hace falta refrescar
+`.env.local`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Aplicar cambios de schema
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Editar `supabase/schema.sql` (es idempotente) y correr:
 
-## Learn More
+```bash
+node scripts/migrate.mjs
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Pendientes antes del evento
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Archivo histórico** (`src/content/rounds.ts`, round `archivo-historico`):
+   reemplazar las 3 fotos placeholder de `/public/round2/` por fotos reales
+   elegidas del zip de WhatsApp, y ajustar la respuesta correcta de cada una.
+2. **Contexto perdido**: los 4 mensajes ya están cargados con su evento
+   correcto (Copa Galaxy / Cosquín Rock / ESTA / Moncholo FC) — no requiere
+   más trabajo salvo que Tomi quiera sumar más anécdotas.
+3. Revisar el tono final de los mensajes "cancelables" del Round 1 antes de
+   la noche del evento.
