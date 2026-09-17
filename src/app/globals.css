@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-bg-deep: #160726;
+  --color-bg-mid: #2a1150;
+  --color-bg-grad-top: #4a1b8a;
+  --color-bg-grad-bot: #160726;
+
+  --color-surface: #2e1a54;
+  --color-surface-2: #43277e;
+  --color-surface-line: #5a3aa0;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #cbb8ee;
+  --color-text-muted: #8a76b4;
+
+  --color-magenta: #ff2e93;
+  --color-cyan: #00e5ff;
+  --color-lime: #b4ff39;
+  --color-orange: #ff6b35;
+  --color-yellow: #ffc93c;
+  --color-violet: #9d4edd;
+  --color-blue: #4d7cff;
+  --color-teal: #2ee6a6;
+  --color-red: #ff5c7a;
+
+  --color-good: #33e88e;
+  --color-danger: #ff3b5c;
+  --color-gold: #ffd54a;
+
+  --font-display: var(--font-luckiest), cursive;
+  --font-heading: var(--font-fredoka), sans-serif;
+
+  --animate-float-a: float-a 7s ease-in-out infinite;
+  --animate-float-b: float-b 9s ease-in-out infinite;
+  --animate-float-c: float-c 8s ease-in-out infinite;
+  --animate-twinkle: twinkle 2.4s ease-in-out infinite;
+  --animate-bounce-in: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-pop-in: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-confetti-fall: confetti-fall 4.5s linear infinite;
+  --animate-wiggle: wiggle 3s ease-in-out infinite;
+  --animate-spin-slow: spin 3s linear infinite;
+  --animate-dot-pulse: dot-pulse 1.2s ease-in-out infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes float-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(18px, -26px) scale(1.06); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-22px, 20px) scale(0.95); }
+}
+@keyframes float-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(14px, 24px) scale(1.04); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@keyframes bounce-in {
+  0% { opacity: 0; transform: scale(0.6) translateY(30px); }
+  60% { opacity: 1; transform: scale(1.05) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.7); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-120%) skewX(-15deg); }
+  100% { transform: translateX(220%) skewX(-15deg); }
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-40px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(920px) rotate(400deg); opacity: 0.9; }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-bg-deep);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(120% 100% at 50% 0%, var(--color-bg-grad-top) 0%, var(--color-bg-mid) 45%, var(--color-bg-grad-bot) 100%);
+  min-height: 100dvh;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
