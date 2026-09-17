@@ -58,8 +58,9 @@ node scripts/migrate.mjs
    anclados en cosas reales del grupo (el "más gracioso" autodeclarado de
    Franco, el perfil de IA de junio 2026, etc.), no genéricos.
 4. **Estadísticas del grupo** (8) — datos reales del chat + el perfil de IA.
-5. **Emoji firma** (6) — los emojis que más usa cada uno en el chat real,
-   uno por persona.
+5. **¿Real o inventado?** (8) — mitad son mensajes 100% reales del chat,
+   mitad los inventé imitando el tono del grupo. Hay que adivinar cuál es
+   cuál (a veces lo real suena más falso que lo inventado).
 
 ## Pendientes antes del evento
 

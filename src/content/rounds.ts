@@ -5,7 +5,7 @@ export type RoundType =
   | "photo"
   | "most-likely"
   | "stats"
-  | "emoji";
+  | "real-or-fake";
 
 export interface ChoiceQuestion {
   id: string;
@@ -284,50 +284,64 @@ const round4: Round = {
   ],
 };
 
-// Emojis reales, sacados de contar cuáles usa más cada uno en el chat.
-// Cada combo cubre a las 6 personas, así nadie del grupo queda afuera del round.
+// Mitad mensajes 100% reales del chat (verificados, textual), mitad inventados
+// por Claude imitando el tono del grupo. La gracia es que a veces lo real
+// suena más falso que lo inventado.
+const REAL_OR_FAKE_OPTIONS = ["Real", "Inventado"];
 const round5: Round = {
   index: 4,
-  key: "emoji-firma",
-  type: "emoji",
-  title: "Emoji firma",
-  subtitle: "Estos son los emojis que más usa esa persona en el chat real. ¿Quién es?",
+  key: "real-o-inventado",
+  type: "real-or-fake",
+  title: "¿Real o inventado?",
+  subtitle: "Mitad son mensajes reales del chat. La otra mitad me los inventé yo. ¿Cuál es cuál?",
   questions: [
     {
       id: "r5q1",
-      prompt: "🤨 🥹 ✅",
-      options: CHAT_PEOPLE,
-      correctIndex: CHAT_PEOPLE.indexOf("Joaco"),
+      prompt: "“No sé cómo mierda hizo Garro para matar a un tipo, boludo”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 0, // real
     },
     {
       id: "r5q2",
-      prompt: "✅ ✊ ✌",
-      options: CHAT_PEOPLE,
-      correctIndex: CHAT_PEOPLE.indexOf("Tomi"),
+      prompt: "“Si Moncholo pierde este domingo me borro del grupo en vivo”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 1, // inventado
     },
     {
       id: "r5q3",
-      prompt: "😍 🤤 🥺",
-      options: CHAT_PEOPLE,
-      correctIndex: CHAT_PEOPLE.indexOf("Mati"),
+      prompt: "“Sos tan boludo que le erraste a un penal en modo fácil del FIFA”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 1, // inventado
     },
     {
       id: "r5q4",
-      prompt: "👀 🤣 😭",
-      options: CHAT_PEOPLE,
-      correctIndex: CHAT_PEOPLE.indexOf("Juampi"),
+      prompt: "“Y le rompen el orto al puto pecho frío helado cagón de Piastri”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 0, // real
     },
     {
       id: "r5q5",
-      prompt: "⚽ 😂 😍",
-      options: CHAT_PEOPLE,
-      correctIndex: CHAT_PEOPLE.indexOf("Franco"),
+      prompt: "“Lo blanqueo: la última vez que gané una discusión fue en 2019”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 1, // inventado
     },
     {
       id: "r5q6",
-      prompt: "❌ 💪 😴",
-      options: CHAT_PEOPLE,
-      correctIndex: CHAT_PEOPLE.indexOf("Lucas"),
+      prompt: "“Q culia como me mandan a mí primero al muere después de la seguidilla de fisuras”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 0, // real
+    },
+    {
+      id: "r5q7",
+      prompt: "“Qué feo que no te acuerdes que fuiste el primero en traicionar”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 0, // real
+    },
+    {
+      id: "r5q8",
+      prompt: "“Le rompieron el orto en el Cosquín y todavía no lo superó”",
+      options: REAL_OR_FAKE_OPTIONS,
+      correctIndex: 1, // inventado
     },
   ],
 };

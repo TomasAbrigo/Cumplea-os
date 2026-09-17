@@ -231,9 +231,7 @@ function QuestionPhase({
       {question.imageUrl && (
         <img src={question.imageUrl} alt="" className="mx-auto max-h-72 rounded-lg border border-neutral-800" />
       )}
-      <p className={question.roundType === "emoji" ? "text-7xl tracking-wide" : "text-3xl font-bold text-wrap-balance"}>
-        {question.prompt}
-      </p>
+      <p className="text-3xl font-bold text-wrap-balance">{question.prompt}</p>
       {question.detail && <p className="text-neutral-500 text-sm font-mono">{question.detail}</p>}
 
       <div className="h-3 rounded-full bg-neutral-800 overflow-hidden">

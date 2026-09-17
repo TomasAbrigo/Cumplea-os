@@ -299,9 +299,7 @@ function ChoiceQuestionCard({
       {question.imageUrl && (
         <img src={question.imageUrl} alt="" className="mx-auto max-h-56 rounded-lg border border-neutral-800" />
       )}
-      <p className={question.roundType === "emoji" ? "text-5xl tracking-wide" : "text-xl font-bold"}>
-        {question.prompt}
-      </p>
+      <p className="text-xl font-bold">{question.prompt}</p>
       <div className="grid grid-cols-1 gap-3">
         {question.options?.map((opt, i) =>
           i === hiddenIndex ? (
