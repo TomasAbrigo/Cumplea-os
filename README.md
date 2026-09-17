@@ -49,20 +49,37 @@ Editar `supabase/schema.sql` (es idempotente) y correr:
 node scripts/migrate.mjs
 ```
 
-## Los 5 rounds
+## Los 6 rounds
 
 1. **¿Quién dijo esto?** (16 preguntas) — mensajes reales sin autor.
 2. **Archivo histórico** (3) — Spotify Wrapped real de Franco, Juampi y Mati,
    compartidos en el chat el 3/12/25.
-3. **¿Quién es más probable que...?** (8) — votación en vivo, con prompts
-   anclados en cosas reales del grupo (el "más gracioso" autodeclarado de
-   Franco, el perfil de IA de junio 2026, etc.), no genéricos.
+3. **¿Quién es más probable que...?** (8) — votación en vivo, con escenarios
+   concretos armados con referencias 100% reales del grupo (Moncholo, el
+   boteo, el prode, "estar fisura"), no categorías genéricas.
 4. **Estadísticas del grupo** (8) — datos reales del chat + el perfil de IA.
 5. **¿Real o inventado?** (8) — mitad son mensajes 100% reales del chat,
-   mitad los inventé imitando el tono del grupo. Hay que adivinar cuál es
-   cuál (a veces lo real suena más falso que lo inventado).
+   mitad los inventé imitando el tono y la sintaxis desprolija real del grupo
+   (usando nombres/referencias reales: el pelado, la Agus, Kenai, Nico).
+6. **¿Qué carajo estoy escuchando?** (6) — audio real de WhatsApp por
+   persona, elegido por reacciones reales de risa en el chat alrededor de
+   cada uno. Solo suena en la pantalla principal (host toca "Reproducir"),
+   los celus responden igual. Usa `.ogg` (no `.opus`) para que el servidor
+   sirva el `Content-Type` correcto — ver nota abajo.
+
+### Nota técnica: por qué `.ogg` y no `.opus`
+
+Los audios de WhatsApp exportados son Ogg-Opus real, pero Next.js sirve
+archivos `.opus` desde `/public` con `Content-Type: application/octet-stream`
+(no reconoce la extensión), lo que rompe la reproducción en el navegador.
+Renombrarlos a `.ogg` (mismo contenido, mismo contenedor) hace que se sirvan
+como `audio/ogg` y reproducen bien en Chrome sin convertir nada.
 
 ## Pendientes antes del evento
 
 1. Revisar el tono final de los mensajes "cancelables" del Round 1 antes de
    la noche del evento.
+2. Escuchar los 6 audios de Round 6 vos mismo (Claude no puede "escuchar"
+   para verificar contenido/calidad) y avisar si alguno hay que cambiar —
+   sobre todo el de Mati, que fue el que menos reacción de risa tenía
+   alrededor en el chat.

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRoom } from "@/lib/useRoom";
 import { useCurrentQuestion } from "@/lib/useQuestion";
 import { useMeta } from "@/lib/useMeta";
@@ -275,6 +275,48 @@ function CircularTimer({ pct, seconds }: { pct: number; seconds: number }) {
   );
 }
 
+function AudioPlayer({ src }: { src: string }) {
+  const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  function toggle() {
+    const el = audioRef.current;
+    if (!el) return;
+    if (playing) {
+      el.pause();
+    } else {
+      el.currentTime = 0;
+      el.play();
+    }
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <audio
+        ref={audioRef}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+      >
+        <source src={src} type="audio/ogg; codecs=opus" />
+      </audio>
+      <button
+        onClick={toggle}
+        className="flex h-32 w-32 items-center justify-center rounded-full text-6xl transition-transform active:scale-95"
+        style={{
+          background: "linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.25)), #B4FF39",
+          boxShadow: "0 0 40px rgba(180,255,57,0.5)",
+        }}
+      >
+        {playing ? "⏸️" : "▶️"}
+      </button>
+      <p className="font-heading text-sm uppercase tracking-[0.2em] text-text-secondary">
+        {playing ? "Sonando…" : "Tocá para reproducir"}
+      </p>
+    </div>
+  );
+}
+
 function QuestionPhase({
   question,
   room,
@@ -303,7 +345,9 @@ function QuestionPhase({
 
       <div className="flex items-center gap-10">
         <Panel className="flex flex-1 flex-col items-center gap-6 p-14 text-center">
-          {question.imageUrl ? (
+          {question.audioUrl ? (
+            <AudioPlayer src={question.audioUrl} />
+          ) : question.imageUrl ? (
             <img src={question.imageUrl} alt="" className="max-h-64 rounded-3xl border-2 border-surface-line object-cover" />
           ) : (
             <span className="text-6xl text-lime">❝</span>

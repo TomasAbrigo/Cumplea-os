@@ -34,6 +34,7 @@ export async function GET(req: Request) {
       ...base,
       detail: q.detail ?? null,
       imageUrl: q.imageUrl ?? null,
+      audioUrl: q.audioUrl ?? null,
       options: q.options,
       correctIndex: revealPhase ? q.correctIndex : null,
     });

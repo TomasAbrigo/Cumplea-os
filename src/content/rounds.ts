@@ -5,7 +5,8 @@ export type RoundType =
   | "photo"
   | "most-likely"
   | "stats"
-  | "real-or-fake";
+  | "real-or-fake"
+  | "audio";
 
 export interface ChoiceQuestion {
   id: string;
@@ -14,6 +15,7 @@ export interface ChoiceQuestion {
   options: string[];
   correctIndex: number;
   imageUrl?: string;
+  audioUrl?: string;
 }
 
 export interface MostLikelyQuestion {
@@ -174,8 +176,9 @@ const round2: Round = {
   ],
 };
 
-// Cada prompt está anclado en algo real del grupo (lo que dicen de sí mismos
-// o lo que la IA que consultaron el 26/6/26 dijo de cada uno), no son genéricos.
+// No son categorías genéricas ("el gracioso", "el caótico") sino escenarios
+// concretos armados con objetos y referencias 100% reales del grupo (Moncholo,
+// el boteo, el prode, "fisura", los prestamos que nunca vuelven).
 const round3: Round = {
   index: 2,
   key: "mas-probable-que",
@@ -185,35 +188,35 @@ const round3: Round = {
   questions: [
     {
       id: "r3q1",
-      prompt: "¿Quién es más probable que se declare 'el más gracioso del grupo, con amplia diferencia' sin que nadie se lo pregunte?",
+      prompt: "¿Quién es más probable que llegue tarde a Moncholo por quedarse dormido después de la previa?",
     },
     {
       id: "r3q2",
-      prompt: "¿Quién es más probable que gane cualquier discusión de Fórmula 1?",
+      prompt: "¿Quién es más probable que se olvide del boteo hasta el último día y aparezca pidiendo plata a las corridas?",
     },
     {
       id: "r3q3",
-      prompt: "¿Quién es más probable que ya esté armando el grupo de la próxima previa?",
+      prompt: "¿Quién es más probable que le erre a un prode fácil y lo siga jugando como si nada?",
     },
     {
       id: "r3q4",
-      prompt: "¿A quién la IA volvería a calificar como 'el caótico' del grupo?",
+      prompt: "¿Quién es más probable que se enoje en serio por una jugada de Moncholo y la siga hablando una semana después?",
     },
     {
       id: "r3q5",
-      prompt: "¿Quién es más probable que tire un comentario random que nadie esperaba y termine siendo lo más gracioso de la noche?",
+      prompt: "¿Quién es más probable que te devuelva algo que le prestaste roto, o directamente nunca?",
     },
     {
       id: "r3q6",
-      prompt: "¿Quién es más probable que te cargue con una frase corta y se vaya sin esperar respuesta?",
+      prompt: "¿Quién es más probable que arranque una discusión de política picante en medio de la joda?",
     },
     {
       id: "r3q7",
-      prompt: "Según la IA, este es de los que 'más suele tener razón'. ¿A quién eligen ustedes?",
+      prompt: "¿Quién es más probable que diga que 'está fisura' con algo sin tener la menor idea de qué está hablando?",
     },
     {
       id: "r3q8",
-      prompt: "¿Quién es más probable que insulte primero en cualquier discusión del grupo?",
+      prompt: "¿Quién es más probable que cancele un plan a último momento con una excusa elaboradísima?",
     },
   ],
 };
@@ -303,13 +306,13 @@ const round5: Round = {
     },
     {
       id: "r5q2",
-      prompt: "“Si Moncholo pierde este domingo me borro del grupo en vivo”",
+      prompt: "“El pelado dice que si Colapinto no entra a Q3 se va a vivir a la loma del orto”",
       options: REAL_OR_FAKE_OPTIONS,
       correctIndex: 1, // inventado
     },
     {
       id: "r5q3",
-      prompt: "“Sos tan boludo que le erraste a un penal en modo fácil del FIFA”",
+      prompt: "“La Agus le mandó captura a todos menos a mí y ahora estoy re digno”",
       options: REAL_OR_FAKE_OPTIONS,
       correctIndex: 1, // inventado
     },
@@ -321,7 +324,7 @@ const round5: Round = {
     },
     {
       id: "r5q5",
-      prompt: "“Lo blanqueo: la última vez que gané una discusión fue en 2019”",
+      prompt: "“Kenai me preguntó quién era yo y alguien le dijo que el que paga la previa”",
       options: REAL_OR_FAKE_OPTIONS,
       correctIndex: 1, // inventado
     },
@@ -339,14 +342,69 @@ const round5: Round = {
     },
     {
       id: "r5q8",
-      prompt: "“Le rompieron el orto en el Cosquín y todavía no lo superó”",
+      prompt: "“Nico se equivocó de grupo y mandó el audio ahí nomás sin darse cuenta”",
       options: REAL_OR_FAKE_OPTIONS,
       correctIndex: 1, // inventado
     },
   ],
 };
 
-export const ROUNDS: Round[] = [round1, round2, round3, round4, round5];
+// Audios reales de WhatsApp (elegidos por reacciones reales de risa en el chat
+// alrededor de cada uno). Suena por los parlantes de la TV/notebook — el host
+// toca "Reproducir", los celus solo muestran las opciones.
+const round6: Round = {
+  index: 5,
+  key: "que-carajo-escucho",
+  type: "audio",
+  title: "¿Qué carajo estoy escuchando?",
+  subtitle: "Audio real de WhatsApp. Escuchalo en la pantalla principal. ¿Quién es?",
+  questions: [
+    {
+      id: "r6q1",
+      prompt: "🔊 Escuchá el audio en la pantalla principal",
+      audioUrl: "/audio/audio-franco.ogg",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Franco"),
+    },
+    {
+      id: "r6q2",
+      prompt: "🔊 Escuchá el audio en la pantalla principal",
+      audioUrl: "/audio/audio-juampi.ogg",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Juampi"),
+    },
+    {
+      id: "r6q3",
+      prompt: "🔊 Escuchá el audio en la pantalla principal",
+      audioUrl: "/audio/audio-lucas.ogg",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Lucas"),
+    },
+    {
+      id: "r6q4",
+      prompt: "🔊 Escuchá el audio en la pantalla principal",
+      audioUrl: "/audio/audio-joaco.ogg",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Joaco"),
+    },
+    {
+      id: "r6q5",
+      prompt: "🔊 Escuchá el audio en la pantalla principal",
+      audioUrl: "/audio/audio-mati.ogg",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Mati"),
+    },
+    {
+      id: "r6q6",
+      prompt: "🔊 Escuchá el audio en la pantalla principal",
+      audioUrl: "/audio/audio-tomi.ogg",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Tomi"),
+    },
+  ],
+};
+
+export const ROUNDS: Round[] = [round1, round2, round3, round4, round5, round6];
 
 export function getRound(index: number): Round | undefined {
   return ROUNDS.find((r) => r.index === index);

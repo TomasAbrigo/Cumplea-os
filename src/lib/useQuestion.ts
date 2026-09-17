@@ -7,6 +7,7 @@ export interface QuestionPayload {
   prompt: string;
   detail?: string | null;
   imageUrl?: string | null;
+  audioUrl?: string | null;
   options?: string[];
   correctIndex?: number | null;
 }
