@@ -1,13 +1,11 @@
 // Contenido real de "La Noche de los 9", curado del chat de WhatsApp del grupo.
-// Ver TODOs: Round 2 (fotos) y las anécdotas completas de Round 5 quedan
-// pendientes de que Tomi las termine de curar antes del evento.
 
 export type RoundType =
   | "who-said-it"
   | "photo"
   | "most-likely"
   | "stats"
-  | "lost-context";
+  | "emoji";
 
 export interface ChoiceQuestion {
   id: string;
@@ -127,6 +125,18 @@ const round1: Round = {
       options: CHAT_PEOPLE,
       correctIndex: CHAT_PEOPLE.indexOf("Juampi"),
     },
+    {
+      id: "r1q15",
+      prompt: "“El que inventó el trabajo es un hijo de mil puta”",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Mati"),
+    },
+    {
+      id: "r1q16",
+      prompt: "“Devolveme la otra parte de la nena, hijo de puta”",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Mati"),
+    },
   ],
 };
 
@@ -164,6 +174,8 @@ const round2: Round = {
   ],
 };
 
+// Cada prompt está anclado en algo real del grupo (lo que dicen de sí mismos
+// o lo que la IA que consultaron el 26/6/26 dijo de cada uno), no son genéricos.
 const round3: Round = {
   index: 2,
   key: "mas-probable-que",
@@ -171,14 +183,38 @@ const round3: Round = {
   title: "¿Quién es más probable que...?",
   subtitle: "Votá en secreto. Puntos si tu voto coincide con la mayoría.",
   questions: [
-    { id: "r3q1", prompt: "¿Quién es más probable que termine la noche llorando de risa?" },
-    { id: "r3q2", prompt: "¿Quién es más probable que se quede dormido primero?" },
-    { id: "r3q3", prompt: "¿Quién es más probable que arme quilombo por nada?" },
-    { id: "r3q4", prompt: "¿Quién es más probable que hable de laburo en medio de la joda?" },
-    { id: "r3q5", prompt: "¿Quién es más probable que le mande un audio de 5 minutos a alguien que no lo pidió?" },
-    { id: "r3q6", prompt: "¿Quién es más probable que termine bailando solo?" },
-    { id: "r3q7", prompt: "¿Quién es más probable que se olvide este cumpleaños el año que viene?" },
-    { id: "r3q8", prompt: "¿Quién es más probable que diga algo que después tenga que borrar del chat?" },
+    {
+      id: "r3q1",
+      prompt: "¿Quién es más probable que se declare 'el más gracioso del grupo, con amplia diferencia' sin que nadie se lo pregunte?",
+    },
+    {
+      id: "r3q2",
+      prompt: "¿Quién es más probable que gane cualquier discusión de Fórmula 1?",
+    },
+    {
+      id: "r3q3",
+      prompt: "¿Quién es más probable que ya esté armando el grupo de la próxima previa?",
+    },
+    {
+      id: "r3q4",
+      prompt: "¿A quién la IA volvería a calificar como 'el caótico' del grupo?",
+    },
+    {
+      id: "r3q5",
+      prompt: "¿Quién es más probable que tire un comentario random que nadie esperaba y termine siendo lo más gracioso de la noche?",
+    },
+    {
+      id: "r3q6",
+      prompt: "¿Quién es más probable que te cargue con una frase corta y se vaya sin esperar respuesta?",
+    },
+    {
+      id: "r3q7",
+      prompt: "Según la IA, este es de los que 'más suele tener razón'. ¿A quién eligen ustedes?",
+    },
+    {
+      id: "r3q8",
+      prompt: "¿Quién es más probable que insulte primero en cualquier discusión del grupo?",
+    },
   ],
 };
 
@@ -248,36 +284,50 @@ const round4: Round = {
   ],
 };
 
+// Emojis reales, sacados de contar cuáles usa más cada uno en el chat.
+// Cada combo cubre a las 6 personas, así nadie del grupo queda afuera del round.
 const round5: Round = {
   index: 4,
-  key: "contexto-perdido",
-  type: "lost-context",
-  title: "Contexto perdido",
-  subtitle: "Mensaje real, sin autor ni fecha. ¿De qué anécdota o evento viene?",
+  key: "emoji-firma",
+  type: "emoji",
+  title: "Emoji firma",
+  subtitle: "Estos son los emojis que más usa esa persona en el chat real. ¿Quién es?",
   questions: [
     {
       id: "r5q1",
-      prompt: "“Yo no tomo hasta el Cosquín”",
-      options: ["Copa Galaxy", "Cosquín Rock", "Trámite ESTA / viaje a EE.UU.", "Moncholo FC"],
-      correctIndex: 1,
+      prompt: "🤨 🥹 ✅",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Joaco"),
     },
     {
       id: "r5q2",
-      prompt: "“-TORNEO APERTURA 2025- Domingos / Copa Galaxy ⚽️”",
-      options: ["Copa Galaxy", "Cosquín Rock", "Trámite ESTA / viaje a EE.UU.", "Moncholo FC"],
-      correctIndex: 0,
+      prompt: "✅ ✊ ✌",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Tomi"),
     },
     {
       id: "r5q3",
-      prompt: "“Official ESTA Application Website, U.S. Customs and Border Protection Document.pdf”",
-      options: ["Copa Galaxy", "Cosquín Rock", "Trámite ESTA / viaje a EE.UU.", "Moncholo FC"],
-      correctIndex: 2,
+      prompt: "😍 🤤 🥺",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Mati"),
     },
     {
       id: "r5q4",
-      prompt: "“Moncholo FC - Torneo Clausura CG.xlsx”",
-      options: ["Copa Galaxy", "Cosquín Rock", "Trámite ESTA / viaje a EE.UU.", "Moncholo FC"],
-      correctIndex: 3,
+      prompt: "👀 🤣 😭",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Juampi"),
+    },
+    {
+      id: "r5q5",
+      prompt: "⚽ 😂 😍",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Franco"),
+    },
+    {
+      id: "r5q6",
+      prompt: "❌ 💪 😴",
+      options: CHAT_PEOPLE,
+      correctIndex: CHAT_PEOPLE.indexOf("Lucas"),
     },
   ],
 };

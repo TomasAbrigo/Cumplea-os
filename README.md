@@ -49,14 +49,19 @@ Editar `supabase/schema.sql` (es idempotente) y correr:
 node scripts/migrate.mjs
 ```
 
+## Los 5 rounds
+
+1. **¿Quién dijo esto?** (16 preguntas) — mensajes reales sin autor.
+2. **Archivo histórico** (3) — Spotify Wrapped real de Franco, Juampi y Mati,
+   compartidos en el chat el 3/12/25.
+3. **¿Quién es más probable que...?** (8) — votación en vivo, con prompts
+   anclados en cosas reales del grupo (el "más gracioso" autodeclarado de
+   Franco, el perfil de IA de junio 2026, etc.), no genéricos.
+4. **Estadísticas del grupo** (8) — datos reales del chat + el perfil de IA.
+5. **Emoji firma** (6) — los emojis que más usa cada uno en el chat real,
+   uno por persona.
+
 ## Pendientes antes del evento
 
-1. **Archivo histórico**: ya cargado con 3 Spotify Wrapped reales que Franco,
-   Juampi y Mati compartieron en el chat (3/12/25) — autoría confirmada por
-   el propio mensaje de cada uno. Si Tomi prefiere otras fotos, reemplazar en
-   `/public/round2/` y ajustar `src/content/rounds.ts`.
-2. **Contexto perdido**: los 4 mensajes ya están cargados con su evento
-   correcto (Copa Galaxy / Cosquín Rock / ESTA / Moncholo FC) — no requiere
-   más trabajo salvo que Tomi quiera sumar más anécdotas.
-3. Revisar el tono final de los mensajes "cancelables" del Round 1 antes de
+1. Revisar el tono final de los mensajes "cancelables" del Round 1 antes de
    la noche del evento.
